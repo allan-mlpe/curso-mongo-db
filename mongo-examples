@@ -1,0 +1,21 @@
+use blog_db
+
+// inserção de dados
+db.posts.insert( {title: 'Welcome', content: 'This is my first post!', tags: [], postDate: new Date('1997-02-11')});
+db.posts.insert( {title: 'Post 1', content: 'my text', tags: [], postDate: new Date('2011-09-22')});
+db.posts.insert( {title: 'Post 2', content: 'I\'m trying to write something funny', tags: [], postDate: new Date('2012-01-01')});
+
+
+// bulk insert
+
+
+// busca de posts
+db.posts.find(); // retorna todos os documentos
+
+db.posts.find({ title: /^W/ }); // busca usando regex
+
+db.posts.find({}, { content: 1 }); // retorna apenas valores para um dos campos do documento (no caso, o campo "content")
+
+db.posts.find().limit(5); // limita o retorno da busca a no máximo 5 documentos
+
+db.posts.find().sort({ postDate: -1, title: 1 }); // ordena os resultados com base nos campos fornecidos
