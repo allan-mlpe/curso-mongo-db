@@ -5,9 +5,19 @@ db.posts.insert( {title: 'Welcome', content: 'This is my first post!', tags: [],
 db.posts.insert( {title: 'Post 1', content: 'my text', tags: [], postDate: new Date('2011-09-22')});
 db.posts.insert( {title: 'Post 2', content: 'I\'m trying to write something funny', tags: [], postDate: new Date('2012-01-01')});
 
+// inserção de array de dados
+myData = [
+    {title: 'Second post', content: 'this is my second post', tags: ['tech', 'news'], postDate: new Date('2015-05-12')},
+    {title: 'F1 Champioship', content: '22 races in the next year season', tags: ['tech', 'news'], postDate: new Date('2015-05-12')},
+    {title: 'Germany 7x1 Brazil', content: 'What a game, my friends!', tags: ['tech', 'news'], postDate: new Date('2015-05-12')}
+]
+db.posts.insert(myData);
 
 // bulk insert
-
+var bulk = db.posts.initializeUnorderedBulkOp();
+bulk.insert({title: 'The best movies of 2017', content: '1. It, 2. Saw, ...', tags: ['movies', 'cinema'], postDate: new Date('2017-11-11')});
+bulk.insert({title: 'F1 Legends', content: '1. Schumacher, 2. Fangio, 3. Senna, ...', tags: ['f1', 'race'], postDate: new Date('2019-01-12')});
+bulk.execute();
 
 // busca de posts
 db.posts.find(); // retorna todos os documentos
@@ -19,3 +29,12 @@ db.posts.find({}, { content: 1 }); // retorna apenas valores para um dos campos 
 db.posts.find().limit(5); // limita o retorno da busca a no máximo 5 documentos
 
 db.posts.find().sort({ postDate: -1, title: 1 }); // ordena os resultados com base nos campos fornecidos
+
+db.posts.find({}, {title: true}); // traz apenas os títulos dos documentos retornados na busa
+
+db.posts.find({}, {title: true, _id: false}); // para impedir que o `_id` devemos explicitamente declará-lo como falso
+
+db.posts.findOne({title: 'Post 1'}); // retorna um único documento de acordo com o critério de busca utilizado
+
+db.posts.findOne({title: 'Welcome'}, {content: true}); // retorna apenas o valor de `content` para o documento retornado
+
