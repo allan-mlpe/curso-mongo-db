@@ -43,11 +43,21 @@ Se optar por instalar uma instância local do Mongo ao invés de usar o Docker, 
 
 - Consultar todos os documentos:
 
-    `db.collection.find(<QUERY>, <ATTRIBUTES_TO_SHOW>)`
+    `db.<COLLECTION_NAME>.find(<QUERY>, <ATTRIBUTES_TO_SHOW>)`
 
 - Buscar único documento:
 
-    `db.collection.findOne(<QUERY>, <ATTRIBUTES_TO_SHOW>)` 
+    `db.<COLLECTION_NAME>.findOne(<QUERY>, <ATTRIBUTES_TO_SHOW>)` 
+
+- Contar o número de registros de uma collection/consulta:
+
+    `db.<COLLECTION_NAME>.count()`
+
+    ou
+
+    `db.<COLLECTION_NAME>.find(<QUERY>).count()`
+
+ 
 
 ## Clientes para o MongoDB
 - [MongoDB Compass](https://www.mongodb.com/products/compass).

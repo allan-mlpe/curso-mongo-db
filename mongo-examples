@@ -1,6 +1,7 @@
 use blog_db
 
-// inserção de dados
+
+========= inserção de dados =========
 db.posts.insert( {title: 'Welcome', content: 'This is my first post!', tags: [], postDate: new Date('1997-02-11')});
 db.posts.insert( {title: 'Post 1', content: 'my text', tags: [], postDate: new Date('2011-09-22')});
 db.posts.insert( {title: 'Post 2', content: 'I\'m trying to write something funny', tags: [], postDate: new Date('2012-01-01')});
@@ -19,7 +20,8 @@ bulk.insert({title: 'The best movies of 2017', content: '1. It, 2. Saw, ...', ta
 bulk.insert({title: 'F1 Legends', content: '1. Schumacher, 2. Fangio, 3. Senna, ...', tags: ['f1', 'race'], postDate: new Date('2019-01-12')});
 bulk.execute();
 
-// busca de posts
+
+========= busca de posts =========
 db.posts.find(); // retorna todos os documentos
 
 db.posts.find({ title: /^W/ }); // busca usando regex
@@ -38,3 +40,22 @@ db.posts.findOne({title: 'Post 1'}); // retorna um único documento de acordo co
 
 db.posts.findOne({title: 'Welcome'}, {content: true}); // retorna apenas o valor de `content` para o documento retornado
 
+db.posts.find({title: { $in: ['Post 1', 'Post 2'] }}); // retorna documentos cujos título está presente no array com o operador $in
+
+db.posts.find({postDate: { $lt: new Date('2011-01-01') }}); // retorna documentos com data de postagem anterior a 01/01/2011
+
+db.posts.find({ $or: [{postDate: { $lt: new Date('2011-01-01') }}, {postDate: { $gt: new Date('2016-01-01') }}] }); // uso do operador $or para consultas (traz documentos anteriores a 01/01/2011 e posteriores a 01/01/2016)
+
+db.posts.find({ title: /^F/, $or: [ {'tags.0': 'f1'}, {'tags.0': 'race'} ]}); // uso de and e $or (traz registros cujo título começa com 'F' e que o primeiro item das tags é 'f1' ou 'race')
+
+
+========= atualização de documentos =========
+db.posts.update({title: 'Second Post'}, { $set: {title: 'Coming back'}})
+
+db.posts.update({tags: { $size: 0 }}, {$set: {tags: ['default']}}, {multi: true}); // atualiza todos os documentos cujo tamanho do array de tags é igual a 0. O operador `$multi` serve para indicar que mais de um registro pode ser atualizado com esse comando. 
+
+db.posts.update({tags: 'default' }, {$set: {tags: ['single']}}, {multi: true}); // atualiza todos os documentos em que o array `tags` contém a palavra `default`
+
+db.posts.update({title: 'Post 2'}, {title: 'Post II', content: 'I\'m trying to write something', tags: [], postDate: new Date('2019-11-01')}); // substitui o objeto inteiro (exceto o _id)
+
+db.posts.update({title: 'dogs'}, {title: 'Dogs - GIFs', content: 'The funniest GIFs of dogs ever', tags: ['funny', 'dogs', 'animals'], postDate: new Date('2016-08-31')}, {upsert: true}); // utilizamos a flag `{ upsert: true }` para adicionar um novo registro caso não haja um documento que atenda ao critério de busca (title = dogs)
