@@ -59,3 +59,13 @@ db.posts.update({tags: 'default' }, {$set: {tags: ['single']}}, {multi: true}); 
 db.posts.update({title: 'Post 2'}, {title: 'Post II', content: 'I\'m trying to write something', tags: [], postDate: new Date('2019-11-01')}); // substitui o objeto inteiro (exceto o _id)
 
 db.posts.update({title: 'dogs'}, {title: 'Dogs - GIFs', content: 'The funniest GIFs of dogs ever', tags: ['funny', 'dogs', 'animals'], postDate: new Date('2016-08-31')}, {upsert: true}); // utilizamos a flag `{ upsert: true }` para adicionar um novo registro caso não haja um documento que atenda ao critério de busca (title = dogs)
+
+
+========= exclusão de documentos =========
+db.posts.remove({title: 'Second post'}); // remove todos os registros que atendam ao predicado
+
+db.posts.remove({title: 'Second post'}, 1); // limita o número de documentos a serem excluídos a 1
+
+db.posts.remove({}); // remove todos os documentos da collection
+
+db.posts.drop(); // remove todos os documentos e a própria collection
