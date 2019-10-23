@@ -69,3 +69,21 @@ db.posts.remove({title: 'Second post'}, 1); // limita o número de documentos a 
 db.posts.remove({}); // remove todos os documentos da collection
 
 db.posts.drop(); // remove todos os documentos e a própria collection
+
+
+========= backup =========
+mongodump --db blog_db --out ./dump // realiza o backup do banco de dados para o arquivo dumpfile.json
+
+mongodump --collection posts --db blog_db --out ./dump-posts // realiza o backup apenas dos documentos da collections `posts`
+
+mongoexport --db blog_db --collection posts --out posts.json // exporta os documentos da collection 'posts' para um arquivo JSON
+
+[mongodump | mongoexport] -u admin -p 123456 --authenticationDatabase admin --db blog_db --out ./dumpfile // realiza o dump junto com a autenticação
+
+
+========= restore =========
+mongorestore /home/dump/dump_folder // realiza a restauração do banco de dados a partir do diretório do dump
+
+mongorestore --drop /home/dump/dump_folder // caso exista um banco com mesmo nome, ele será excluído (--drop) e depois restaurado a partir do dump criado
+
+mongoimport --db blog_db posts.json // realiza a importação da collection a partir de um arquivo json

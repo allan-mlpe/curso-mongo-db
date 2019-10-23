@@ -57,7 +57,24 @@ Se optar por instalar uma instância local do Mongo ao invés de usar o Docker, 
 
     `db.<COLLECTION_NAME>.find(<QUERY>).count()`
 
- 
+
+## Backup e Restore
+
+- Realizar um backup de um banco de dados:
+
+    - Para um diretório utilizando a estrutura de backup padrão do Mongo: `mongodump --db <DATABASE_NAME> --out <PATH/TO/DUMP>`.
+    
+    - Para um arquivo json (devemos especificar a collection): `mongoexport --db <DATABASE_NAME> --collection <COLLECTION_NAME> --out <FILE_NAME>.json`.
+
+- Restaurar um banco de dados a partir de um arquivo:
+    
+    - `mongorestore <PATH/TO/DUMP>`.
+
+    - `mongoimport --drop --db <DATABASE_NAME> <DUMP_FILE>.json`.
+
+Caso a instância do MongoDB necessite de autenticação, devemos incluir, nos comandos acima os, parâmetros de autentificação: `-u <DB_USER> -p <DB_USER_PASSWORD> --authenticationDatabase <DB_USER>`.
+
+Para mais informações sobre backup/restore, verifique a [documentação](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/).
 
 ## Clientes para o MongoDB
 - [MongoDB Compass](https://www.mongodb.com/products/compass).
