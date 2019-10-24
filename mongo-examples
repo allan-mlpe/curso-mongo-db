@@ -48,6 +48,8 @@ db.posts.find({ $or: [{postDate: { $lt: new Date('2011-01-01') }}, {postDate: { 
 
 db.posts.find({ title: /^F/, $or: [ {'tags.0': 'f1'}, {'tags.0': 'race'} ]}); // uso de and e $or (traz registros cujo título começa com 'F' e que o primeiro item das tags é 'f1' ou 'race')
 
+db.posts.find({}).skip(10).limit(10); // pula os primeiros 10 documentos e retorna no máximo os 10 próximos (bom para fazer paginação).
+
 
 ========= atualização de documentos =========
 db.posts.update({title: 'Second Post'}, { $set: {title: 'Coming back'}})
