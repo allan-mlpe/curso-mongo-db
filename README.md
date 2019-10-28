@@ -11,6 +11,17 @@ Se optar por instalar uma instância local do Mongo ao invés de usar o Docker, 
 
 
 ## Comandos Úteis
+
+- Listar usuários do banco de dados:
+    
+    `db.getUsers()`
+
+- Criar um novo usuário no banco de dados:
+
+    `db.createUser({user: "<USERNAME>", pwd: "<PASSWORD>", roles: [{role: "<ROLE_VALUE>", db: <DATABASE>}, {...}]})`
+
+    Para verificar os possíveis _roles_ do MongoDB, clique [aqui](https://docs.mongodb.com/manual/reference/built-in-roles/).
+
 - Listar bancos de dados:
     
     `show databases`
