@@ -89,3 +89,5 @@ mongorestore /home/dump/dump_folder // realiza a restauração do banco de dados
 mongorestore --drop /home/dump/dump_folder // caso exista um banco com mesmo nome, ele será excluído (--drop) e depois restaurado a partir do dump criado
 
 mongoimport --db blog_db posts.json // realiza a importação da collection a partir de um arquivo json
+
+mongoimport --db bancodedados -c nomecollection --type csv --file nomedoarquivo.csv --headerline // o `type` serve para indicar o tipo do arquivo e o `headerline` para que o título das colunas sejam convertidos nas propriedades do documento
