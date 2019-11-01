@@ -50,6 +50,9 @@ db.posts.find({ title: /^F/, $or: [ {'tags.0': 'f1'}, {'tags.0': 'race'} ]}); //
 
 db.posts.find({}).skip(10).limit(10); // pula os primeiros 10 documentos e retorna no máximo os 10 próximos (bom para fazer paginação).
 
+========= agregação e distinct =========
+db.posts.aggregate([{ $group: { _id: '$title', total: { $sum: 1 } } }]); // agrega os posts com o mesmo título e realiza a contagem dos grupos
+
 
 ========= criação de índices =========
 db.posts.createIndex({ title: 1 }); // cria um índice ascendente no campo `title`
